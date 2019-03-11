@@ -1,8 +1,8 @@
 import React, { Component, Fragment } from 'react';
 
-import { BrowserRouter,Router, Switch,Route } from 'react-router-dom'
+import { BrowserRouter, Router, Switch, Route } from 'react-router-dom'
 
-import { Redirect} from 'react-router-dom'
+import { Redirect } from 'react-router-dom'
 import './App.css';
 import Header from './components/Header'
 import Footer from './components/Footer';
@@ -16,13 +16,15 @@ import 'react-toastify/dist/ReactToastify.css';
 
 
 class App extends Component {
-  constructor(props){
+  constructor(props) {
     super(props)
-    this.state={
-      name:'',
-      isAdmin:false
+    this.state = {
+      name: '',
+      isAdmin: false
     }
   }
+  
+
   logIn = (data) => {
     fetch('http://localhost:9999/auth/signin', {
       method: 'POST',
@@ -34,20 +36,29 @@ class App extends Component {
     })
       .then(res => res.json())
       .then(body => {
-        if (!body.username) {
-          toast.error('No such username or pass')
+
+        
+          toast.info(body.message)
+        if (body.name) {
+        localStorage.setItem('name', body.name)
+          
+        }
+
+
+        if (body.role === 'Admin') {
+          this.setState({
+            name: body.name,
+            isAdmin: true
+          })
         }
         else {
-          localStorage.setItem('name', body.name)
-          localStorage.setItem('userId', body.userId)
-          localStorage.setItem('token', body.token)
-          toast.success(body.message);
           this.setState({
-            username: body.username,
-            isAdmin: body.isAdmin
+            name: body.name
           })
-          }
-      } )
+        }
+
+
+      })
   }
   register = (data) => {
     fetch('http://localhost:9999/auth/signup', {
@@ -60,32 +71,33 @@ class App extends Component {
     })
       .then(res => res.json())
       .then(body => {
-        if (!body.username) {
-          toast.error('No such username or pass')
-        }
-        else {
-          localStorage.setItem('name', body.name)
-          localStorage.setItem('userId', body.userId)
-          localStorage.setItem('token', body.token)
-          toast.success(body.message);
-          this.setState({
-            name: body.name,
-            isAdmin: body.isAdmin
-          })
+        
+          toast.info(body.message)
+          if (!body.name) {
+              localStorage.setItem('name', body.name)
+            
           }
-      } )
+        
+
+        this.setState({
+          name: body.name
+        })
+      })
   }
   render() {
     return (
-      
-        <Fragment>
-          <Header />
-          <Switch>
-            <Route path='/login' render={() => <Login logIn={this.logIn} name={this.state.name}/>} />
-            <Route path='/register' render={() => <Register register={this.register} name={this.state.name}/>} />
-          </Switch>
-          <Footer />
-        </Fragment>
+
+      <Fragment>
+  
+        <Header />
+    <ToastContainer />
+
+        <Switch>
+          <Route path='/login' render={() => <Login logIn={this.logIn} name={this.state.name} />} />
+          <Route path='/register' render={() => <Register register={this.register} name={this.state.name} />} />
+        </Switch>
+        <Footer />
+      </Fragment>
 
 
     );

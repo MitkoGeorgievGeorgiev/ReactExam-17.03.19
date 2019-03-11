@@ -30,7 +30,9 @@ module.exports = {
         salt
       }).then((user) => {
         res.status(201)
-          .json({ message: 'User created!', name: user.name });
+          .json({ message: 'User created!',
+           name: user.name,
+          role:user.role });
       })
       .catch((error) => {
         if (!error.statusCode) {
@@ -71,7 +73,8 @@ module.exports = {
              message: 'User successfully logged in!', 
              token, 
              userId: user._id.toString(),
-             name :user.name
+             name :user.name,
+             role:user.role
            });
       })
       .catch(error => {

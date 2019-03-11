@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import { Redirect } from 'react-router-dom'
-class Login extends Component {
+class Register extends Component {
     constructor(props) {
         super(props)
         this.state = {
@@ -23,26 +23,26 @@ class Login extends Component {
         this.props.register(this.state)
     }
     render() {
-        if (this.props.name.length) {
+        if (this.props.name) {
             return <Redirect to='/' />
         }
         return (
             <div className="form-wrapper">
-                <h1>Register</h1>
+                <h2>Регистрация</h2>
                 <form onSubmit={this.handleSubmit}>
                     <div className="form-group">
-                        <label htmlFor="email">E-mail</label>
+                        <label htmlFor="email">Имейл</label>
                         <input type="text" name="email" id="email" placeholder="Enter e-mail" value={this.state.email} onChange={this.handleChange} />
                     </div>
                     <div className="form-group">
-                        <label htmlFor="password">Password</label>
+                        <label htmlFor="password">Парола</label>
                         <input type="password" name="password" id="password" placeholder="Enter password" value={this.state.password} onChange={this.handleChange} />
                     </div>
                     <div className="form-group">
-                        <label htmlFor="name">Name</label>
+                        <label htmlFor="name">Име</label>
                         <input type="text" name="name" id="name" placeholder="Enter name" value={this.state.name} onChange={this.handleChange} />
                     </div>
-                    <button type="submit" >Log in</button>
+                    <button type="submit" >Вход</button>
                 </form>
             </div>
 
@@ -50,4 +50,4 @@ class Login extends Component {
         )
     }
 }
-export default Login
+export default Register

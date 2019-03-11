@@ -13,7 +13,7 @@ body {
 }
 
 a {
-    font-size: 20px;
+    font-size: 5px;
     font-weight: bold;
 }
 
@@ -26,7 +26,7 @@ img {
 nav.navbar-menu {    
     display: flex;
     flex-wrap: wrap;
-    justify-content: space-between;
+    
     align-items: center;
     background-color: rgb(118, 103, 202);
 }
@@ -37,8 +37,8 @@ nav.navbar-menu a {
     text-decoration: none;
     color: white;    
     width: 15%;
-    align-items: center;
-    padding: 20px 10px;
+    align-items: left;
+    padding: 3px 2px;
     border: 1px solid rgb(118, 103, 202);
 }
 

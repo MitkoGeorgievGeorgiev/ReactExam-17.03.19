@@ -23,22 +23,22 @@ class Login extends Component{
         this.props.logIn(this.state)
     }
     render(){
-        if (this.props.name.length) {
+        if (this.props.name) {
             return <Redirect to='/' />
         }
         return(
             <div className="form-wrapper">
-                <h1>Login</h1>
+                <h2>Вход</h2>
                 <form onSubmit={this.handleSubmit}>
                     <div className="form-group">
-                        <label htmlFor="email">E-mail</label>
+                        <label htmlFor="email">Имейл</label>
                         <input type="text" name="email" id="email" placeholder="Enter e-mail"  value={this.state.email} onChange={this.handleChange}/>
                     </div>
                     <div className="form-group">
-                        <label htmlFor="password">Password</label>
+                        <label htmlFor="password">Парола</label>
                         <input type="password" name="password" id="password" placeholder="Enter password"  value={this.state.password} onChange={this.handleChange}/>
                     </div>
-                    <button type="submit" >Log in</button>
+                    <button type="submit" >Вход</button>
                 </form>
             </div>
             
