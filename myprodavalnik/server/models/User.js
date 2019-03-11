@@ -48,7 +48,7 @@ User.seedAdminUser = async () => {
       email: 'Admin@gmail.com',
       salt,
       hashedPassword,
-      role: 'Admin'
+      role:'Admin'
     });
   } catch (e) {
     console.log(e);

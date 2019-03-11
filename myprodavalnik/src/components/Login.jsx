@@ -1,5 +1,5 @@
 import React,{Component} from 'react'
-
+import {Redirect} from 'react-router-dom'
 class Login extends Component{
     constructor(props){
         super(props)
@@ -23,6 +23,9 @@ class Login extends Component{
         this.props.logIn(this.state)
     }
     render(){
+        if (this.props.name.length) {
+            return <Redirect to='/' />
+        }
         return(
             <div className="form-wrapper">
                 <h1>Login</h1>

@@ -30,7 +30,7 @@ module.exports = {
         salt
       }).then((user) => {
         res.status(201)
-          .json({ message: 'User created!', userId: user._id });
+          .json({ message: 'User created!', name: user.name });
       })
       .catch((error) => {
         if (!error.statusCode) {
@@ -60,7 +60,8 @@ module.exports = {
 
         const token = jwt.sign({ 
           email: user.email,
-          userId: user._id.toString()
+          userId: user._id.toString(),
+          name:user.name
         }
         , 'somesupersecret'
         , { expiresIn: '1h' });
@@ -69,7 +70,8 @@ module.exports = {
            { 
              message: 'User successfully logged in!', 
              token, 
-             userId: user._id.toString() 
+             userId: user._id.toString(),
+             name :user.name
            });
       })
       .catch(error => {
