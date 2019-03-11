@@ -11,6 +11,8 @@ import Register from './components/Register';
 import Home from './components/Home';
 import AllPosts from './components/AllPosts';
 import CreatePost from './components/CreatePost';
+import PostDetails from './components/PostDetails';
+
 
 
 
@@ -132,6 +134,8 @@ class App extends Component {
           <Route path='/login' render={() => <Login logIn={this.logIn} name={this.state.name} />} />
           <Route path='/register' render={() => <Register register={this.register} name={this.state.name} />} />
           <Route path='/posts/all' render={() => <AllPosts  />} />
+          <Route path='/post/details/:id' render={() => <PostDetails  />} />
+
           <Route path='/posts/create' render={() => <CreatePost  createPost={this.createPost}/>} />
 
 
