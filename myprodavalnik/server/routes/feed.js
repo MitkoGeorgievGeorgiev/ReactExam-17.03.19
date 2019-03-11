@@ -3,7 +3,7 @@ const { body } = require('express-validator/check');
 const feedController = require('../controllers/feed');
 const isAuth = require('../middleware/is-auth');
 
-router.get('/posts', isAuth, feedController.getPosts);
+router.get('/posts',  feedController.getPosts);
 router.post('/post/create', isAuth , [
   body('title')
     .trim()

@@ -33,15 +33,16 @@ module.exports = {
         next(error);
       });
   },
-  createPost: (req, res) => {
+  createPost: (req, res,next) => {
     // Validate post using express-validator
     // Return 422 with errors array if something went wrong
-    if (validatePost(req, res)) {
-      const { title, content } = req.body;
-
+    if (validatePost(req, res,next)) {
+      const { title, content,image,price, } = req.body;
+      
+      
       // Create the post in DB and return 201 status code with a message and the post itself with the creator
-      const post = new Post({ title, content, creator: req.userId });
-      let creator;
+      const post = new Post({ title, content,image,price, });
+    
 
       post.save()
         .then(() => {

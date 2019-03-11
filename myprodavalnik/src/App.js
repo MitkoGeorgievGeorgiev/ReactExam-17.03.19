@@ -8,6 +8,11 @@ import Header from './components/Header'
 import Footer from './components/Footer';
 import Login from './components/Login';
 import Register from './components/Register';
+import Home from './components/Home';
+import AllPosts from './components/AllPosts';
+import CreatePost from './components/CreatePost';
+
+
 
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
@@ -41,6 +46,8 @@ class App extends Component {
           toast.info(body.message)
         if (body.name) {
         localStorage.setItem('name', body.name)
+        localStorage.setItem('token',body.token)
+        localStorage.setItem('userId',body.userId)
           
         }
 
@@ -73,7 +80,7 @@ class App extends Component {
       .then(body => {
         
           toast.info(body.message)
-          if (!body.name) {
+          if (body.name) {
               localStorage.setItem('name', body.name)
             
           }
@@ -84,17 +91,50 @@ class App extends Component {
         })
       })
   }
+  logout=()=>{
+    this.setState({
+      name:'',
+      isAdmin:false
+    })
+    localStorage.clear()
+  }
+  createPost(data){
+    fetch('http://localhost:9999/feed/post/create', {
+      method: 'POST',
+      headers: {
+        "Content-Type": "application/json",
+        'Authorization' : `Bearer ${localStorage.token}`
+        // "Content-Type": "application/x-www-form-urlencoded",
+      },
+      body: JSON.stringify(data)
+    })
+      .then(res => res.json())
+      .then(body => {
+        
+          toast.info(body.message)
+          
+        
+
+        
+      })
+  }
+  
   render() {
     return (
 
       <Fragment>
   
-        <Header />
+        <Header logout={this.logout}/>
     <ToastContainer />
 
         <Switch>
+        <Route path='/' render={() => <Home />} exact/>
           <Route path='/login' render={() => <Login logIn={this.logIn} name={this.state.name} />} />
           <Route path='/register' render={() => <Register register={this.register} name={this.state.name} />} />
+          <Route path='/posts/all' render={() => <AllPosts  />} />
+          <Route path='/posts/create' render={() => <CreatePost  createPost={this.createPost}/>} />
+
+
         </Switch>
         <Footer />
       </Fragment>

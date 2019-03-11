@@ -6,14 +6,26 @@ const postSchema = new Schema({
     type: String,
     required: true
   },
+  image:{
+    type: String,
+    required: true
+  },
   content: {
     type: String,
     required: true
   },
-  creator: {
-    type: Schema.Types.ObjectId,
-    ref: 'User',
-    required: true
+  // creator: {
+  //   type: Schema.Types.ObjectId,
+  //   ref: 'User',
+  //   required: true
+  // },
+  price:{
+    type:String,
+    required:true
+  },
+  date:{
+    type:Date,
+    default:Date.now()
   }
 });
 

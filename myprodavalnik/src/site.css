@@ -169,3 +169,20 @@ th {
         width: 100%;
     }
 }
+h1,h2,p{
+    text-align: center;
+    font-weight: bold;
+}
+.center{
+    display: block;
+  margin-left: auto;
+  margin-right: auto;
+  width: 50%;
+}
+.center-right{
+    display: block;
+    margin-left: auto;
+    margin-right: 10%;
+
+    width: 50%;
+}

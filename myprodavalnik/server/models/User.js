@@ -13,7 +13,7 @@ const userSchema = new Schema({
   },
   name: {
     type: Schema.Types.String,
-    required:true
+    required: true
   },
   salt: {
     type: Schema.Types.String,
@@ -22,7 +22,10 @@ const userSchema = new Schema({
   posts: [
     { type: Schema.Types.ObjectId, ref: 'Post' }
   ],
-  role:{type:String,default:'user'}
+  role: {
+    type: String,
+    default: 'user'
+  }
 }
 );
 
@@ -46,10 +49,10 @@ User.seedAdminUser = async () => {
     return User.create({
       username: 'Admin',
       email: 'Admin@gmail.com',
-      name:'Admin',
+      name: 'Admin',
       salt,
       hashedPassword,
-      role:'Admin'
+      role: 'Admin'
     });
   } catch (e) {
     console.log(e);

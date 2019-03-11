@@ -6,8 +6,11 @@ const Header = (props) => {
         <header>
             <nav className="navbar-menu">
                 <NavLink to="/" activeClassName="active" aria-current="page">My Prodavalnik</NavLink>
-                <NavLink to="/store" activeClassName="active">Всички обяви</NavLink>
-                <NavLink to="/orders" activeClassName="active">Мойте обяви</NavLink>
+                <NavLink to="/posts/all" activeClassName="active">Всички обяви</NavLink>
+                {localStorage.name ?
+                    <NavLink to="/orders" activeClassName="active">Мойте обяви</NavLink>
+                    : null}
+
                 {!localStorage.name ? <NavLink to="/register">Регистрация</NavLink>
                     // <NavLink to="/login">Login</NavLink>
 
@@ -18,7 +21,7 @@ const Header = (props) => {
 
                 }
                 {!localStorage.name
-                    ? <NavLink to="/login">Логин</NavLink>
+                    ? <NavLink to="/login">Вход</NavLink>
                     : <NavLink to="/username">Добре дошъл {localStorage.name}!</NavLink>}
             </nav>
         </header>
