@@ -1,20 +1,26 @@
 import React from 'react'
 import {Link} from 'react-router-dom'
-class AllPosts extends React.Component {
+class MyPosts extends React.Component {
     constructor(props) {
         super(props)
-        this.state = {
-            posts: []
+        
+        this.state={
+            posts:[]
         }
     }
+    
     componentDidMount() {
-        fetch('http://localhost:9999/feed/posts')
+        fetch(`http://localhost:9999/feed/user/${localStorage.userId}`)
             .then(res => res.json())
-            .then(posts => {
-                this.setState({ posts: posts.posts })
+            .then(data => {
+               this.setState({
+                   posts:data.user.posts
+               })
+               
             })
     }
     render() {
+      
         if (!this.state.posts.length) {
             return (
                 <div className="d-flex justify-content-center">
@@ -55,4 +61,4 @@ class AllPosts extends React.Component {
     }
 }
 
-export default AllPosts
+export default MyPosts

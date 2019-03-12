@@ -5,7 +5,7 @@ const User = require('../models/User');
 function validatePost(req, res) {
   const errors = validationResult(req);
   if (!errors.isEmpty()) {
-     res.status(422).json({
+    res.status(422).json({
       message: 'Validation failed, entered data is incorrect',
       errors: errors.array()
     });
@@ -33,16 +33,30 @@ module.exports = {
         next(error);
       });
   },
-  createPost: (req, res,next) => {
+  getUser: (req, res) => {
+    const id = req.params.id
+    User.findById(id)
+      .then(user => {
+        res.status(200)
+          .json({ message: 'User fetched.', user })
+          
+      }).catch((error) => {
+        if (!error.statusCode) {
+          error.statusCode = 500;
+        }
+
+      })
+  },
+  createPost: (req, res, next) => {
     // Validate post using express-validator
     // Return 422 with errors array if something went wrong
-    if (validatePost(req, res,next)) {
-      const { title, content,image,price, } = req.body;
-      
-      
+    if (validatePost(req, res, next)) {
+      const { title, content, image, price, author, phone } = req.body;
+
+
       // Create the post in DB and return 201 status code with a message and the post itself with the creator
-      const post = new Post({ title, content,image,price, });
-    
+      const post = new Post({ title, content, image, price, author, phone });
+
 
       post.save()
         .then(() => {
@@ -58,6 +72,7 @@ module.exports = {
             .status(201)
             .json({
               message: 'Post created successfully!',
+              success: true,
               post: post,
               creator: { userId: req.userId, name: creator.name }
             })
@@ -66,7 +81,7 @@ module.exports = {
           if (!error.statusCode) {
             error.statusCode = 500;
           }
-  
+
           next(error);
         });
     }
@@ -99,9 +114,9 @@ module.exports = {
       })
       .then(() => {
         res.status(200)
-        .json({
-          message: 'Post deleted successfully!'
-        })
+          .json({
+            message: 'Post deleted successfully!'
+          })
       })
       .catch((error) => {
         if (!error.statusCode) {
@@ -166,7 +181,7 @@ module.exports = {
           if (!error.statusCode) {
             error.statusCode = 500;
           }
-  
+
           next(error);
         });
     }

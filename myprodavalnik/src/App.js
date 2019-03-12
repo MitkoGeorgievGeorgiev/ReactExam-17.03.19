@@ -12,6 +12,8 @@ import Home from './components/Home';
 import AllPosts from './components/AllPosts';
 import CreatePost from './components/CreatePost';
 import PostDetails from './components/PostDetails';
+import MyPosts from './components/MyPosts';
+
 
 
 
@@ -27,8 +29,10 @@ class App extends Component {
     super(props)
     this.state = {
       name: '',
-      isAdmin: false
+      isAdmin: false,
+      postCreated:false
     }
+    
   }
   
 
@@ -100,6 +104,8 @@ class App extends Component {
     })
     localStorage.clear()
   }
+  
+  
   createPost(data){
     fetch('http://localhost:9999/feed/post/create', {
       method: 'POST',
@@ -114,7 +120,10 @@ class App extends Component {
       .then(body => {
         
           toast.info(body.message)
-          
+          if(body.success){
+        //todo redirect
+
+          }
         
 
         
@@ -126,7 +135,7 @@ class App extends Component {
 
       <Fragment>
   
-        <Header logout={this.logout}/>
+        <Header logout={this.logout} name={this.state.name}/>
     <ToastContainer />
 
         <Switch>
@@ -134,9 +143,11 @@ class App extends Component {
           <Route path='/login' render={() => <Login logIn={this.logIn} name={this.state.name} />} />
           <Route path='/register' render={() => <Register register={this.register} name={this.state.name} />} />
           <Route path='/posts/all' render={() => <AllPosts  />} />
-          <Route path='/post/details/:id' render={() => <PostDetails  />} />
+          <Route path='/posts/my/:id' render={(props) => <MyPosts  {...props}/>} />
 
-          <Route path='/posts/create' render={() => <CreatePost  createPost={this.createPost}/>} />
+          <Route path='/post/details/:id' render={(props) => <PostDetails {...props}/>} />
+
+          <Route path='/posts/create' render={() => <CreatePost  createPost={this.createPost}/>} postCreated={this.state.postCreated}/>
 
 
         </Switch>

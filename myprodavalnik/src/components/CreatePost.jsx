@@ -8,7 +8,9 @@ class CreatePost extends Component {
             image: '',
             content: '',
             price: '',
-            creator:localStorage.getItem('userId')
+            author:localStorage.name,
+            phone:'',
+            
 
         }
         this.handleChange = this.handleChange.bind(this)
@@ -24,8 +26,12 @@ class CreatePost extends Component {
         this.props.createPost(this.state)
     }
     render() {
+        if(this.props.postCreated){
+         return   <Redirect to='/' ></Redirect>
+        }
         
         return (
+            
             <div className="form-wrapper">
                 <h2>Добавяне на нова обява</h2>
                 <form onSubmit={this.handleSubmit}>
@@ -40,6 +46,10 @@ class CreatePost extends Component {
                     <div className="form-group">
                         <label htmlFor="content">Описание</label>
                         <textarea type="text" name="content" id="content" placeholder="Enter description" value={this.state.content} onChange={this.handleChange} />
+                    </div>
+                    <div className="form-group">
+                        <label htmlFor="content">Телефон за контакти</label>
+                        <input type="number" name="phone" id="phone" placeholder="Enter phone number" value={this.state.phone} onChange={this.handleChange} />
                     </div>
                     <div className="form-group">
                         <label htmlFor="price">Цена BGN</label>
