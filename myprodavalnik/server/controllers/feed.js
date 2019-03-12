@@ -35,7 +35,7 @@ module.exports = {
   },
   getUser: (req, res) => {
     const id = req.params.id
-    User.findById(id)
+    User.findById(id).populate('posts')
       .then(user => {
         res.status(200)
           .json({ message: 'User fetched.', user })
@@ -143,13 +143,16 @@ module.exports = {
         next(error);
       });
   },
-  updatePost: (req, res) => {
+  updatePost: (req, res,next) => {
     // Validate post using express-validator
     // Return 422 with errors array if something went wrong
-    if (validatePost(req, res)) {
+    
+    
+    if (validatePost(req, res,next)) {
       const postId = req.params.postId;
       const post = req.body;
-
+      
+      
       Post.findById(postId)
         .then((p) => {
           if (!p) {
@@ -158,14 +161,19 @@ module.exports = {
             throw error;
           }
 
-          if (p.creator.toString() !== req.userId) {
-            const error = new Error('Unauthorized');
-            error.statusCode = 403;
-            throw error;
-          }
+          // if (p.creator.toString() !== req.userId) {
+          //   const error = new Error('Unauthorized');
+          //   error.statusCode = 403;
+          //   throw error;
+          // }
 
           p.title = post.title;
           p.content = post.content;
+          p.image = post.image
+          p.author = post.author
+          p.phone = post.phone
+          p.price = post.price
+
 
           return p.save();
         })

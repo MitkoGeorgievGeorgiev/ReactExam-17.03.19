@@ -4,7 +4,8 @@ class PostDetails extends React.Component {
     constructor(props) {
         super(props)
         this.state = {
-            post: null
+            post: null,
+            postForEditting :{}
         }
     }
     componentDidMount() {
@@ -16,7 +17,8 @@ class PostDetails extends React.Component {
             }})
             .then(res => res.json())
             .then(post => {
-                this.setState({ post: post.post })
+                this.setState({ post: post.post,
+                 postForEditting:this.state.post})
             })
     }
     render() {

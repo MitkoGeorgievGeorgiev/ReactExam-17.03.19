@@ -13,6 +13,8 @@ import AllPosts from './components/AllPosts';
 import CreatePost from './components/CreatePost';
 import PostDetails from './components/PostDetails';
 import MyPosts from './components/MyPosts';
+import EditPost from './components/EditPost';
+
 
 
 
@@ -24,13 +26,15 @@ import 'react-toastify/dist/ReactToastify.css';
 
 
 
+
 class App extends Component {
   constructor(props) {
     super(props)
     this.state = {
       name: '',
       isAdmin: false,
-      postCreated:false
+      postCreated:false,
+      postForEditting:{}
     }
     
   }
@@ -129,6 +133,12 @@ class App extends Component {
         
       })
   }
+  postToEdit(data){
+    this.setState({
+      postForEditting:data
+    })
+  }
+  
   
   render() {
     return (
@@ -145,7 +155,9 @@ class App extends Component {
           <Route path='/posts/all' render={() => <AllPosts  />} />
           <Route path='/posts/my/:id' render={(props) => <MyPosts  {...props}/>} />
 
-          <Route path='/post/details/:id' render={(props) => <PostDetails {...props}/>} />
+          <Route path='/post/details/:id' render={(props) => <PostDetails {...props} postToEdit={this.postToEdit}/>} />
+          <Route path='/post/update/:postId' render={(props) => <EditPost {...props} postForEditting={this.state.postForEditting}/>} />
+
 
           <Route path='/posts/create' render={() => <CreatePost  createPost={this.createPost}/>} postCreated={this.state.postCreated}/>
 
