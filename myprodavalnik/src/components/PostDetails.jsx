@@ -42,7 +42,10 @@ class PostDetails extends React.Component {
                         <p className="card-text">{this.state.post.content}</p>
                         <Link to="#" className="btn btn-primary">Набери </Link><span> : {this.state.post.phone}</span><br/>
                         <Link to="#" className="btn btn-primary">Изпрати съобщение до </Link><span > : {this.state.post.author}</span>
-
+                        {this.props.isAdmin
+                        ?<div><Link to={`/post/update/${this.props.match.params.id}`}  className="btn btn-primary" className="blue">Редактирай</Link> 
+                        <Link to={`/post/delete/${this.props.match.params.id}`} className="btn btn-primary" className="red">Изтрий</Link></div>
+                        :null}
                     </div>
                     <div className="card-footer text-muted">
                         {this.state.post.date}

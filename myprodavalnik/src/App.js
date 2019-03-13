@@ -14,6 +14,8 @@ import CreatePost from './components/CreatePost';
 import PostDetails from './components/PostDetails';
 import MyPosts from './components/MyPosts';
 import EditPost from './components/EditPost';
+import DeletePost from './components/DeletePost';
+
 
 
 
@@ -133,11 +135,7 @@ class App extends Component {
         
       })
   }
-  postToEdit(data){
-    this.setState({
-      postForEditting:data
-    })
-  }
+  
   
   
   render() {
@@ -155,11 +153,11 @@ class App extends Component {
           <Route path='/posts/all' render={() => <AllPosts  />} />
           <Route path='/posts/my/:id' render={(props) => <MyPosts  {...props}/>} />
 
-          <Route path='/post/details/:id' render={(props) => <PostDetails {...props} postToEdit={this.postToEdit}/>} />
+          <Route path='/post/details/:id' render={(props) => <PostDetails {...props} postToEdit={this.postToEdit} isAdmin={this.state.isAdmin}/>} />
           <Route path='/post/update/:postId' render={(props) => <EditPost {...props} postForEditting={this.state.postForEditting}/>} />
-
-
           <Route path='/posts/create' render={() => <CreatePost  createPost={this.createPost}/>} postCreated={this.state.postCreated}/>
+          <Route path='/post/delete/:postId' render={(props) => <DeletePost {...props} />}/>
+
 
 
         </Switch>

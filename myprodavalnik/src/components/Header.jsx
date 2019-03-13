@@ -6,7 +6,10 @@ const Header = (props) => {
         <header>
             <nav className="navbar-menu">
                 <NavLink to="/" activeClassName="active" aria-current="page">My Prodavalnik</NavLink>
-                <NavLink to="/posts/all" activeClassName="active">Всички обяви</NavLink>
+                
+                {localStorage.name ?
+                    <NavLink to="/posts/all" activeClassName="active">Всички обяви</NavLink>
+                    : null}
                 {localStorage.name ?
                     <NavLink to={`/posts/my/${localStorage.userId}`} activeClassName="active">Мойте обяви</NavLink>
                     : null}
@@ -22,7 +25,7 @@ const Header = (props) => {
                 }
                 {!localStorage.name
                     ? <NavLink to="/login">Вход</NavLink>
-                    : <NavLink to="/username">Добре дошъл {localStorage.name}!</NavLink>}
+                    : <NavLink to={`/posts/my/${localStorage.userId}`}>Добре дошъл {localStorage.name}!</NavLink>}
             </nav>
         </header>
     )

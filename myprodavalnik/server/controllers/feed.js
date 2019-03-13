@@ -97,11 +97,11 @@ module.exports = {
           throw error;
         }
 
-        if (post.creator.toString() !== req.userId) {
-          const error = new Error('Unauthorized');
-          error.statusCode = 403;
-          throw error;
-        }
+        // if (post.creator.toString() !== req.userId) {
+        //   const error = new Error('Unauthorized');
+        //   error.statusCode = 403;
+        //   throw error;
+        // }
 
         return Post.findByIdAndDelete(postId);
       })

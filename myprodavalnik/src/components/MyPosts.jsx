@@ -48,7 +48,7 @@ class MyPosts extends React.Component {
 
                             <p className="card-text">{post.price} BGN</p>
 
-                            <Link to={`/post/update/${post._id}`} onClick={this.props.postToEdit} className="btn btn-primary">Редактирай</Link>
+                            <Link to={`/post/details/${post._id}`} onClick={this.props.postToEdit} className="btn btn-primary">Детайли</Link>
                         </div>
                     </div>
 
