@@ -56,7 +56,7 @@ module.exports = {
         }
 
         if(!user.authenticate(password)) {
-          const error = new Error('Упс,не намерихме юзер с този имейл ;(');
+          const error = new Error('Грешен имейл или парола');
           error.statusCode = 401;
           throw error;
         }

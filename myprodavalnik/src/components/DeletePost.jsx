@@ -1,23 +1,23 @@
 import React from 'react'
-import {Redirect} from 'react-router-dom'
-import {toast} from 'react-toastify'
+import { Redirect } from 'react-router-dom'
+import { toast } from 'react-toastify'
 
 class DeletePost extends React.Component {
     constructor(props) {
         super(props)
-        this.state={
-            redirect:false
+        this.state = {
+            redirect: false
         }
-        this.redirect=this.redirect.bind(this)
-        this.deletePost=this.deletePost.bind(this)
+        this.redirect = this.redirect.bind(this)
+        this.deletePost = this.deletePost.bind(this)
 
     }
-    redirect(){
+    redirect() {
         this.setState({
-            redirect:true
+            redirect: true
         })
     }
-    deletePost(){
+    deletePost() {
         fetch(`http://localhost:9999/feed/post/delete/${this.props.match.params.postId}`, {
             method: 'DELETE',
             headers: {
@@ -25,26 +25,24 @@ class DeletePost extends React.Component {
                 'Authorization': `Bearer ${localStorage.token}`
                 // "Content-Type": "application/x-www-form-urlencoded",
             },
-            // body: JSON.stringify(data)
         })
-            .then(res =>res.json() 
+            .then(res => res.json()
             )
             .then(body => {
-                
+
                 this.setState({
-                   redirect:true})
+                    redirect: true
+                })
                 toast.info(body.message)
-                
             })
     }
     render() {
-        if(this.state.redirect){
-            return <Redirect to='/posts/all'/>
+        if (this.state.redirect) {
+            return <Redirect to='/posts/all' />
         }
         return (
             <div><h1>Сигурни ли сте че искате да изтриете този пост?</h1>
                 <p><button onClick={this.deletePost}>Да</button> <button className="red" onClick={this.redirect}>НЕ</button></p></div>
-
         )
     }
 }

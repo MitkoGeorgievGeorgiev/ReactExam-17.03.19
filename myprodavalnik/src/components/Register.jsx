@@ -8,7 +8,6 @@ class Register extends Component {
             password: '',
             name: '',
             error: ''
-
         }
         this.handleChange = this.handleChange.bind(this)
         this.handleSubmit = this.handleSubmit.bind(this)
@@ -45,8 +44,6 @@ class Register extends Component {
                     <button type="submit" >Вход</button>
                 </form>
             </div>
-
-
         )
     }
 }

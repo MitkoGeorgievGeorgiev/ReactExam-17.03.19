@@ -1,4 +1,4 @@
-import React, { Fragment } from 'react'
+import React from 'react'
 import { NavLink } from 'react-router-dom'
 
 const Header = (props) => {
@@ -6,22 +6,15 @@ const Header = (props) => {
         <header>
             <nav className="navbar-menu">
                 <NavLink to="/" activeClassName="active" aria-current="page">My Prodavalnik</NavLink>
-                
-                {localStorage.name ?
-                    <NavLink to="/posts/all" activeClassName="active">Всички обяви</NavLink>
-                    : null}
-                {localStorage.name ?
+                <NavLink to="/posts/all" activeClassName="active">Всички обяви</NavLink>
+                {localStorage.name
+                    ?
                     <NavLink to={`/posts/my/${localStorage.userId}`} activeClassName="active">Мойте обяви</NavLink>
                     : null}
-
-                {!localStorage.name ? <NavLink to="/register">Регистрация</NavLink>
-                    // <NavLink to="/login">Login</NavLink>
-
+                {!localStorage.name
+                    ? <NavLink to="/register">Регистрация</NavLink>
                     :
-
-                    // <NavLink to="/username">Welcome {localStorage.name}!</NavLink>
                     <NavLink to="/logout" onClick={props.logout}>Изход</NavLink>
-
                 }
                 {!localStorage.name
                     ? <NavLink to="/login">Вход</NavLink>

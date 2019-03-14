@@ -16,7 +16,6 @@ const postSchema = new Schema({
   },
   author: {
     type: String,
-    // ref: 'User',
     required: true
   },
   phone:{

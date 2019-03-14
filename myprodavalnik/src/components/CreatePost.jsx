@@ -8,14 +8,13 @@ class CreatePost extends Component {
             image: '',
             content: '',
             price: '',
-            author:localStorage.name,
-            phone:'',
-            
-
+            author: localStorage.name,
+            phone: '',
         }
         this.handleChange = this.handleChange.bind(this)
         this.handleSubmit = this.handleSubmit.bind(this)
     }
+
     handleChange(event) {
         this.setState({
             [event.target.id]: event.target.value
@@ -26,12 +25,10 @@ class CreatePost extends Component {
         this.props.createPost(this.state)
     }
     render() {
-        if(this.props.postCreated){
-         return   <Redirect to='/' ></Redirect>
+        if (this.props.postCreated) {
+            return <Redirect to='/' />
         }
-        
         return (
-            
             <div className="form-wrapper">
                 <h2>Добавяне на нова обява</h2>
                 <form onSubmit={this.handleSubmit}>
@@ -58,8 +55,6 @@ class CreatePost extends Component {
                     <button type="submit" >Създай</button>
                 </form>
             </div>
-
-
         )
     }
 }

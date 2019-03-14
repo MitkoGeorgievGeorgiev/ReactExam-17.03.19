@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import { Redirect } from 'react-router-dom'
-import { ToastContainer, toast } from 'react-toastify';
+import { toast } from 'react-toastify';
 
 class EditPost extends Component {
     constructor(props) {
@@ -12,8 +12,7 @@ class EditPost extends Component {
             price: '',
             author: localStorage.name,
             phone: '',
-
-
+            postCreated: false
         }
         this.handleChange = this.handleChange.bind(this)
         this.handleSubmit = this.handleSubmit.bind(this)
@@ -29,8 +28,6 @@ class EditPost extends Component {
         this.editPost(this.state)
     }
     editPost(data) {
-
-
         fetch(`http://localhost:9999/feed/post/update/${this.props.match.params.postId}`, {
             method: 'PUT',
             headers: {
@@ -42,16 +39,18 @@ class EditPost extends Component {
         })
             .then(res => res.json())
             .then(body => {
-                
+
 
                 toast.info(body.message)
                 if (body.success) {
-                    //todo redirect
+                    console.log(body);
+
+                    this.setState({ postCreated: true })
 
                 }
             })
     }
-    componentDidMount(){
+    componentDidMount() {
         fetch(`http://localhost:9999/feed/post/${this.props.match.params.postId}`, {
             method: 'GET',
             headers: {
@@ -59,32 +58,26 @@ class EditPost extends Component {
                 'Authorization': `Bearer ${localStorage.token}`
                 // "Content-Type": "application/x-www-form-urlencoded",
             },
-            // body: JSON.stringify(data)
         })
-            .then(res =>res.json() 
+            .then(res => res.json()
             )
             .then(body => {
-                
+
                 this.setState({
                     title: body.post.title,
-                image: body.post.image,
-                content: body.post.content,
-                price: body.post.matchprice,
-                author: body.post.author,
-                phone: body.post.phone,})
-            //     toast.info(body.message)
-            //     if (body.success) {
-            //         //todo redirect
-
-            //     }
+                    image: body.post.image,
+                    content: body.post.content,
+                    price: body.post.matchprice,
+                    author: body.post.author,
+                    phone: body.post.phone,
+                })
             })
-    
     }
     render() {
-
-
+        if (this.state.postCreated) {
+            return <Redirect to='/' />
+        }
         return (
-
             <div className="form-wrapper">
                 <h2>Редактиране на обявата</h2>
                 <form onSubmit={this.handleSubmit}>
@@ -111,8 +104,6 @@ class EditPost extends Component {
                     <button type="submit" >Редактирай</button>
                 </form>
             </div>
-
-
         )
     }
 }

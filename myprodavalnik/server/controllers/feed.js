@@ -39,7 +39,7 @@ module.exports = {
       .then(user => {
         res.status(200)
           .json({ message: 'User fetched.', user })
-          
+
       }).catch((error) => {
         if (!error.statusCode) {
           error.statusCode = 500;
@@ -143,16 +143,16 @@ module.exports = {
         next(error);
       });
   },
-  updatePost: (req, res,next) => {
+  updatePost: (req, res, next) => {
     // Validate post using express-validator
     // Return 422 with errors array if something went wrong
-    
-    
-    if (validatePost(req, res,next)) {
+
+
+    if (validatePost(req, res, next)) {
       const postId = req.params.postId;
       const post = req.body;
-      
-      
+
+
       Post.findById(postId)
         .then((p) => {
           if (!p) {
@@ -160,26 +160,18 @@ module.exports = {
             error.statusCode = 404;
             throw error;
           }
-
-          // if (p.creator.toString() !== req.userId) {
-          //   const error = new Error('Unauthorized');
-          //   error.statusCode = 403;
-          //   throw error;
-          // }
-
           p.title = post.title;
           p.content = post.content;
           p.image = post.image
           p.author = post.author
           p.phone = post.phone
           p.price = post.price
-
-
           return p.save();
         })
         .then((p) => {
           if (p) {
             res.status(200).json({
+              success: true,
               message: 'Post updated!',
               post: p
             })

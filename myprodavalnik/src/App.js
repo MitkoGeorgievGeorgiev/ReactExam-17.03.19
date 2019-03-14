@@ -1,9 +1,9 @@
 import React, { Component, Fragment } from 'react';
+import { Switch, Route } from 'react-router-dom'
+import PrivateRoute from 'react-private-route'
 
-import { BrowserRouter, Router, Switch, Route } from 'react-router-dom'
-
-import { Redirect } from 'react-router-dom'
 import './App.css';
+
 import Header from './components/Header'
 import Footer from './components/Footer';
 import Login from './components/Login';
@@ -15,18 +15,8 @@ import PostDetails from './components/PostDetails';
 import MyPosts from './components/MyPosts';
 import EditPost from './components/EditPost';
 import DeletePost from './components/DeletePost';
-
-
-
-
-
-
-
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-
-
-
 
 
 class App extends Component {
@@ -35,12 +25,18 @@ class App extends Component {
     this.state = {
       name: '',
       isAdmin: false,
-      postCreated:false,
-      postForEditting:{}
+      postCreated: false,
+      postForEditting: {}
     }
-    
+    this.createPost = this.createPost.bind(this)
+    this.resetState = this.resetState.bind(this)
+
   }
-  
+  resetState() {
+    this.setState({
+      postCreated: false
+    })
+  }
 
   logIn = (data) => {
     fetch('http://localhost:9999/auth/signin', {
@@ -53,17 +49,12 @@ class App extends Component {
     })
       .then(res => res.json())
       .then(body => {
-
-        
-          toast.info(body.message)
+        toast.info(body.message)
         if (body.name) {
-        localStorage.setItem('name', body.name)
-        localStorage.setItem('token',body.token)
-        localStorage.setItem('userId',body.userId)
-          
+          localStorage.setItem('name', body.name)
+          localStorage.setItem('token', body.token)
+          localStorage.setItem('userId', body.userId)
         }
-
-
         if (body.role === 'Admin') {
           this.setState({
             name: body.name,
@@ -75,8 +66,6 @@ class App extends Component {
             name: body.name
           })
         }
-
-
       })
   }
   register = (data) => {
@@ -90,81 +79,64 @@ class App extends Component {
     })
       .then(res => res.json())
       .then(body => {
-        
-          toast.info(body.message)
-          if (body.name) {
-              localStorage.setItem('name', body.name)
-            
-          }
-        
 
+        toast.info(body.message)
+        if (body.name) {
+          localStorage.setItem('name', body.name)
+        }
         this.setState({
           name: body.name
         })
       })
   }
-  logout=()=>{
+  logout = () => {
     this.setState({
-      name:'',
-      isAdmin:false
+      name: '',
+      isAdmin: false
     })
     localStorage.clear()
   }
-  
-  
-  createPost(data){
+
+  createPost(data) {
     fetch('http://localhost:9999/feed/post/create', {
       method: 'POST',
       headers: {
         "Content-Type": "application/json",
-        'Authorization' : `Bearer ${localStorage.token}`
+        'Authorization': `Bearer ${localStorage.token}`
         // "Content-Type": "application/x-www-form-urlencoded",
       },
       body: JSON.stringify(data)
     })
       .then(res => res.json())
       .then(body => {
-        
-          toast.info(body.message)
-          if(body.success){
-        //todo redirect
-
-          }
-        
-
-        
+        toast.info(body.message)
+        if (body.success) {
+          this.setState({
+            postCreated: true
+          })
+        }
       })
   }
-  
-  
-  
   render() {
     return (
-
       <Fragment>
-  
-        <Header logout={this.logout} name={this.state.name}/>
-    <ToastContainer />
-
+        <Header logout={this.logout} name={this.state.name} />
+        <ToastContainer />
         <Switch>
-        <Route path='/' render={() => <Home />} exact/>
+          <Route path='/' render={() => <Home resetState={this.resetState} />} exact />
+          <Route path='/logout' render={() => <Home resetState={this.resetState} />} exact />
+
           <Route path='/login' render={() => <Login logIn={this.logIn} name={this.state.name} />} />
           <Route path='/register' render={() => <Register register={this.register} name={this.state.name} />} />
-          <Route path='/posts/all' render={() => <AllPosts  />} />
-          <Route path='/posts/my/:id' render={(props) => <MyPosts  {...props}/>} />
-
-          <Route path='/post/details/:id' render={(props) => <PostDetails {...props} postToEdit={this.postToEdit} isAdmin={this.state.isAdmin}/>} />
-          <Route path='/post/update/:postId' render={(props) => <EditPost {...props} postForEditting={this.state.postForEditting}/>} />
-          <Route path='/posts/create' render={() => <CreatePost  createPost={this.createPost}/>} postCreated={this.state.postCreated}/>
-          <Route path='/post/delete/:postId' render={(props) => <DeletePost {...props} />}/>
-
-
-
+          <Route path='/posts/all' render={() => <AllPosts />} />
+          <Route path='/posts/my/:id' render={(props) => <MyPosts  {...props} />} />
+          <Route path='/post/details/:id' render={(props) => <PostDetails {...props} postToEdit={this.postToEdit} isAdmin={this.state.isAdmin} />} />
+          <Route path='/post/update/:postId' render={(props) => <EditPost {...props} postCreated={this.state.postCreated} />} />
+          <Route path='/posts/create' render={(props) => <CreatePost postCreated={this.state.postCreated} createPost={this.createPost} />} />
+          <Route path='/post/delete/:postId' render={(props) => <DeletePost {...props} />} />
         </Switch>
         <Footer />
       </Fragment>
-
-
     );
   }
 }
