@@ -1,6 +1,6 @@
 import React, { Component, Fragment } from 'react';
-import { Switch, Route } from 'react-router-dom'
-import PrivateRoute from 'react-private-route'
+import { Route, Switch,Redirect  } from 'react-router-dom'
+
 
 import './App.css';
 
@@ -15,6 +15,7 @@ import PostDetails from './components/PostDetails';
 import MyPosts from './components/MyPosts';
 import EditPost from './components/EditPost';
 import DeletePost from './components/DeletePost';
+import Error from './components/Error';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
@@ -30,6 +31,7 @@ class App extends Component {
     }
     this.createPost = this.createPost.bind(this)
     this.resetState = this.resetState.bind(this)
+    
 
   }
   resetState() {
@@ -117,6 +119,7 @@ class App extends Component {
         }
       })
   }
+  
   render() {
     return (
       <Fragment>
@@ -125,15 +128,15 @@ class App extends Component {
         <Switch>
           <Route path='/' render={() => <Home resetState={this.resetState} />} exact />
           <Route path='/logout' render={() => <Home resetState={this.resetState} />} exact />
-
           <Route path='/login' render={() => <Login logIn={this.logIn} name={this.state.name} />} />
           <Route path='/register' render={() => <Register register={this.register} name={this.state.name} />} />
           <Route path='/posts/all' render={() => <AllPosts />} />
-          <Route path='/posts/my/:id' render={(props) => <MyPosts  {...props} />} />
-          <Route path='/post/details/:id' render={(props) => <PostDetails {...props} postToEdit={this.postToEdit} isAdmin={this.state.isAdmin} />} />
-          <Route path='/post/update/:postId' render={(props) => <EditPost {...props} postCreated={this.state.postCreated} />} />
-          <Route path='/posts/create' render={(props) => <CreatePost postCreated={this.state.postCreated} createPost={this.createPost} />} />
-          <Route path='/post/delete/:postId' render={(props) => <DeletePost {...props} />} />
+          <Route path='/posts/my/:id'  render={(props) =>this.state.name?  <MyPosts  {...props} />:<Redirect to='/login'/>} />
+          <Route path='/post/details/:id' render={(props) =>this.state.name?  <PostDetails {...props} postToEdit={this.postToEdit} isAdmin={this.state.isAdmin} name={this.state.name}/>:<Redirect to='/login'/>} />
+          <Route path='/posts/create' render={(props) =>this.state.name?  <CreatePost postCreated={this.state.postCreated} createPost={this.createPost} />:<Redirect to='/login'/>} />
+          <Route path='/post/update/:postId' render={(props) =>this.state.isAdmin? <EditPost {...props} postCreated={this.state.postCreated} />:<Redirect to='/login'/> }/>
+          <Route path='/post/delete/:postId' render={(props) => this.state.isAdmin? <DeletePost {...props} />:<Redirect to='/login'/>} />
+          <Route component={Error} />
         </Switch>
         <Footer />
       </Fragment>

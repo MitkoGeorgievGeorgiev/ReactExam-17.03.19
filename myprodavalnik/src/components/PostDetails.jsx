@@ -25,6 +25,7 @@ class PostDetails extends React.Component {
             })
     }
     render() {
+    
         return (<div>
             {!this.state.post
                 ? <div className="d-flex justify-content-center">

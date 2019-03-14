@@ -17,6 +17,8 @@ class EditPost extends Component {
         this.handleChange = this.handleChange.bind(this)
         this.handleSubmit = this.handleSubmit.bind(this)
         this.editPost = this.editPost.bind(this)
+
+
     }
     handleChange(event) {
         this.setState({
@@ -28,6 +30,7 @@ class EditPost extends Component {
         this.editPost(this.state)
     }
     editPost(data) {
+
         fetch(`http://localhost:9999/feed/post/update/${this.props.match.params.postId}`, {
             method: 'PUT',
             headers: {
@@ -39,8 +42,6 @@ class EditPost extends Component {
         })
             .then(res => res.json())
             .then(body => {
-
-
                 toast.info(body.message)
                 if (body.success) {
                     console.log(body);
@@ -62,7 +63,6 @@ class EditPost extends Component {
             .then(res => res.json()
             )
             .then(body => {
-
                 this.setState({
                     title: body.post.title,
                     image: body.post.image,
@@ -74,9 +74,11 @@ class EditPost extends Component {
             })
     }
     render() {
+        
         if (this.state.postCreated) {
             return <Redirect to='/' />
         }
+
         return (
             <div className="form-wrapper">
                 <h2>Редактиране на обявата</h2>
