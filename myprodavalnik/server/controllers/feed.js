@@ -71,7 +71,7 @@ module.exports = {
           res
             .status(201)
             .json({
-              message: 'Post created successfully!',
+              message: 'Успешно добавена обява!',
               success: true,
               post: post,
               creator: { userId: req.userId, name: creator.name }
@@ -115,7 +115,7 @@ module.exports = {
       .then(() => {
         res.status(200)
           .json({
-            message: 'Post deleted successfully!'
+            message: 'Успешно изтриване на обявата!'
           })
       })
       .catch((error) => {
@@ -172,7 +172,7 @@ module.exports = {
           if (p) {
             res.status(200).json({
               success: true,
-              message: 'Post updated!',
+              message: 'Успешно редактирахте обявата!',
               post: p
             })
           }

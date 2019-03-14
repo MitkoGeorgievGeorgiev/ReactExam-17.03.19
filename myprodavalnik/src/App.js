@@ -82,6 +82,8 @@ class App extends Component {
         toast.info(body.message)
         if (body.name) {
           localStorage.setItem('name', body.name)
+          localStorage.setItem('token', body.token)
+          localStorage.setItem('userId', body.userId)
         }
         this.setState({
           name: body.name

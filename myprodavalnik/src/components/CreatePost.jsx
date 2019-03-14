@@ -26,7 +26,7 @@ class CreatePost extends Component {
     }
     render() {
         if (this.props.postCreated) {
-            return <Redirect to='/' />
+            return <Redirect to='/posts/all' />
         }
         return (
             <div className="form-wrapper">
