@@ -1,6 +1,7 @@
 import React, { Component, Fragment } from 'react';
-import { Route, Switch,Redirect  } from 'react-router-dom'
-
+import { Route, Switch, Redirect } from 'react-router-dom'
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 import './App.css';
 
@@ -16,8 +17,6 @@ import MyPosts from './components/MyPosts';
 import EditPost from './components/EditPost';
 import DeletePost from './components/DeletePost';
 import Error from './components/Error';
-import { ToastContainer, toast } from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.css';
 
 
 class App extends Component {
@@ -31,7 +30,7 @@ class App extends Component {
     }
     this.createPost = this.createPost.bind(this)
     this.resetState = this.resetState.bind(this)
-    
+
 
   }
   resetState() {
@@ -45,7 +44,6 @@ class App extends Component {
       method: 'POST',
       headers: {
         "Content-Type": "application/json",
-        // "Content-Type": "application/x-www-form-urlencoded",
       },
       body: JSON.stringify(data)
     })
@@ -58,6 +56,7 @@ class App extends Component {
           localStorage.setItem('userId', body.userId)
         }
         if (body.role === 'Admin') {
+          localStorage.setItem('isAdmin', true)
           this.setState({
             name: body.name,
             isAdmin: true
@@ -75,13 +74,11 @@ class App extends Component {
       method: 'POST',
       headers: {
         "Content-Type": "application/json",
-        // "Content-Type": "application/x-www-form-urlencoded",
       },
       body: JSON.stringify(data)
     })
       .then(res => res.json())
       .then(body => {
-
         toast.info(body.message)
         if (body.name) {
           localStorage.setItem('name', body.name)
@@ -105,7 +102,6 @@ class App extends Component {
       headers: {
         "Content-Type": "application/json",
         'Authorization': `Bearer ${localStorage.token}`
-        // "Content-Type": "application/x-www-form-urlencoded",
       },
       body: JSON.stringify(data)
     })
@@ -119,7 +115,7 @@ class App extends Component {
         }
       })
   }
-  
+
   render() {
     return (
       <Fragment>
@@ -131,11 +127,11 @@ class App extends Component {
           <Route path='/login' render={() => <Login logIn={this.logIn} name={this.state.name} />} />
           <Route path='/register' render={() => <Register register={this.register} name={this.state.name} />} />
           <Route path='/posts/all' render={() => <AllPosts />} />
-          <Route path='/posts/my/:id'  render={(props) =>this.state.name?  <MyPosts  {...props} />:<Redirect to='/login'/>} />
-          <Route path='/post/details/:id' render={(props) =>this.state.name?  <PostDetails {...props} postToEdit={this.postToEdit} isAdmin={this.state.isAdmin} name={this.state.name}/>:<Redirect to='/login'/>} />
-          <Route path='/posts/create' render={(props) =>this.state.name?  <CreatePost postCreated={this.state.postCreated} createPost={this.createPost} />:<Redirect to='/login'/>} />
-          <Route path='/post/update/:postId' render={(props) =>this.state.isAdmin? <EditPost {...props} postCreated={this.state.postCreated} />:<Redirect to='/login'/> }/>
-          <Route path='/post/delete/:postId' render={(props) => this.state.isAdmin? <DeletePost {...props} />:<Redirect to='/login'/>} />
+          <Route path='/posts/my/:id' render={(props) => localStorage.name ? <MyPosts  {...props} /> : <Redirect to='/login' />} />
+          <Route path='/post/details/:id' render={(props) => localStorage.name ? <PostDetails {...props} postToEdit={this.postToEdit} isAdmin={this.state.isAdmin} name={this.state.name} /> : <Redirect to='/login' />} />
+          <Route path='/posts/create' render={() => localStorage.name ? <CreatePost postCreated={this.state.postCreated} createPost={this.createPost} /> : <Redirect to='/login' />} />
+          <Route path='/post/update/:postId' render={(props) => localStorage.isAdmin ? <EditPost {...props} postCreated={this.state.postCreated} /> : <Redirect to='/login' />} />
+          <Route path='/post/delete/:postId' render={(props) => localStorage.isAdmin ? <DeletePost {...props} /> : <Redirect to='/login' />} />
           <Route component={Error} />
         </Switch>
         <Footer />

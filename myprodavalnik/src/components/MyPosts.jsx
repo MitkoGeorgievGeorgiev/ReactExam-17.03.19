@@ -7,7 +7,6 @@ class MyPosts extends React.Component {
             posts: []
         }
     }
-
     componentDidMount() {
         fetch(`http://localhost:9999/feed/user/${localStorage.userId}`)
             .then(res => res.json())
@@ -18,7 +17,6 @@ class MyPosts extends React.Component {
             })
     }
     render() {
-
         if (!this.state.posts.length) {
             return (
                 <div className="d-flex justify-content-center">
@@ -29,7 +27,6 @@ class MyPosts extends React.Component {
                 </div>
             )
         }
-
         return (<div className="row">
             {this.state.posts.length ?
                 this.state.posts.map((post, index) => (
@@ -43,11 +40,9 @@ class MyPosts extends React.Component {
                             <p className="card-text">{post.price} BGN</p>
                             <Link to={`/post/details/${post._id}`} onClick={this.props.postToEdit} className="btn btn-primary">Детайли</Link>
                         </div>
-                    </div>
-                ))
+                    </div>))
                 : null}
-        </div>
-        )
+        </div>)
     }
 }
 export default MyPosts

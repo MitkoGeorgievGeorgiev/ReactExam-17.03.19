@@ -3,7 +3,7 @@ import { Redirect } from 'react-router-dom'
 class Login extends Component {
     constructor(props) {
         super(props)
-        this.state = {       
+        this.state = {
             email: '',
             password: '',
             error: ''

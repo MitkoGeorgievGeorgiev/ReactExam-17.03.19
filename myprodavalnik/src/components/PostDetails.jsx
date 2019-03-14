@@ -25,7 +25,7 @@ class PostDetails extends React.Component {
             })
     }
     render() {
-    
+
         return (<div>
             {!this.state.post
                 ? <div className="d-flex justify-content-center">
@@ -34,8 +34,7 @@ class PostDetails extends React.Component {
                         <span className="sr-only">Loading...</span>
                     </div>
                 </div>
-                :
-                <div className="card text-center">
+                : <div className="card text-center">
                     <div className="card-header">
                         {this.state.post.title}
                     </div>

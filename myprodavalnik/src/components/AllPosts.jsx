@@ -10,8 +10,8 @@ class AllPosts extends React.Component {
     componentDidMount() {
         fetch('http://localhost:9999/feed/posts')
             .then(res => res.json())
-            .then(posts => {
-                this.setState({ posts: posts.posts })
+            .then(data => {
+                this.setState({ posts: data.posts })
             })
     }
     render() {
@@ -26,22 +26,22 @@ class AllPosts extends React.Component {
             )
         }
         return (
-        <div className="row">
-            {this.state.posts.length ?
-                this.state.posts.map((post, index) => (
-                    <div key={index} className="card" style={{ width: '18rem' }}>
-                        <p className="card-text">{post.title}</p>
-                        <img src={post.image} className="card-img-top" alt="..." />
-                        <div className="card-body">
-                            <p className="card-title">Описание</p>
-                            <p className="card-text">{post.content}</p>
-                            <h5 className="card-title">Цена</h5>
-                            <p className="card-text">{post.price} BGN</p>
-                            <Link to={`/post/details/${post._id}`} className="btn btn-primary">Детайли</Link>
+            <div className="row">
+                {this.state.posts.length ?
+                    this.state.posts.map((post, index) => (
+                        <div key={index} className="card" style={{ width: '18rem' }}>
+                            <p className="card-text">{post.title}</p>
+                            <img src={post.image} className="card-img-top" alt="..." />
+                            <div className="card-body">
+                                <p className="card-title">Описание</p>
+                                <p className="card-text">{post.content}</p>
+                                <h5 className="card-title">Цена</h5>
+                                <p className="card-text">{post.price} BGN</p>
+                                <Link to={`/post/details/${post._id}`} className="btn btn-primary">Детайли</Link>
+                            </div>
                         </div>
-                    </div>
-                )) : null}
-        </div>
+                    )) : null}
+            </div>
 
         )
     }

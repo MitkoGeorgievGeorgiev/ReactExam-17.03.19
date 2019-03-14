@@ -8,13 +8,11 @@ const Header = (props) => {
                 <NavLink to="/" activeClassName="active" aria-current="page">My Prodavalnik</NavLink>
                 <NavLink to="/posts/all" activeClassName="active">Всички обяви</NavLink>
                 {localStorage.name
-                    ?
-                    <NavLink to={`/posts/my/${localStorage.userId}`} activeClassName="active">Мойте обяви</NavLink>
+                    ? <NavLink to={`/posts/my/${localStorage.userId}`} activeClassName="active">Мойте обяви</NavLink>
                     : null}
                 {!localStorage.name
                     ? <NavLink to="/register">Регистрация</NavLink>
-                    :
-                    <NavLink to="/logout" onClick={props.logout}>Изход</NavLink>
+                    : <NavLink to="/logout" onClick={props.logout}>Изход</NavLink>
                 }
                 {!localStorage.name
                     ? <NavLink to="/login">Вход</NavLink>

@@ -23,13 +23,10 @@ class DeletePost extends React.Component {
             headers: {
                 "Content-Type": "application/json",
                 'Authorization': `Bearer ${localStorage.token}`
-                // "Content-Type": "application/x-www-form-urlencoded",
             },
         })
-            .then(res => res.json()
-            )
+            .then(res => res.json())
             .then(body => {
-
                 this.setState({
                     redirect: true
                 })
@@ -41,7 +38,7 @@ class DeletePost extends React.Component {
             return <Redirect to='/posts/all' />
         }
         return (
-            <div><h1>Сигурни ли сте че искате да изтриете този пост?</h1>
+            <div><h1>Сигурни ли сте че искате да изтриете тази обява?</h1>
                 <p><button onClick={this.deletePost}>Да</button> <button className="red" onClick={this.redirect}>НЕ</button></p></div>
         )
     }
