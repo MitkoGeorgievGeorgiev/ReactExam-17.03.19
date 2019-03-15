@@ -1,23 +1,23 @@
 # MyProdavalnik 
 
-This is a simple app for finding and publish ads.
+This is a simple marketplace app.
 
 Guests can see home page and all ads.
-Logged in user can add new ads and see his own ads.
-Administrator has permission to edit and delete all ads.
+Logged in user can add new ads,search in existing,view ad details and see his own ads.
+Administrator has permission to edit and delete ads.
 
 ## Technologies
 Project is created with:
 * Bootstrap: 4.3
-* ReactJs
-* ExpressJs
+* React 
+* Express 
 
 ## Setup
 To run this project, install it locally using npm:
 
 ```
 $ npm install
-$ npm start
+$ npm start 
 Runs the app in the development mode.http://localhost:3000 to view it in the browser.
 ```
 
