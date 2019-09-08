@@ -18,7 +18,7 @@ class Login extends Component {
     }
     handleSubmit(event) {
         event.preventDefault()
-        this.props.logIn(this.state)
+        this.props.logIn('signIn',this.state)
     }
     render() {
         if (this.props.name) {

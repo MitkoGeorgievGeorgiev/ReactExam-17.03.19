@@ -2,6 +2,7 @@ import React, { Component, Fragment } from 'react';
 import { Route, Switch, Redirect } from 'react-router-dom'
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import fetchData from './services/fetchData/fetchData'
 
 import './App.css';
 
@@ -39,45 +40,23 @@ class App extends Component {
     })
   }
 
-  logIn = (data) => {
-    fetch('http://localhost:9999/auth/signin', {
-      method: 'POST',
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(data)
-    })
-      .then(res => res.json())
+  logIn = (method, data) => {
+    fetchData(method, data)
       .then(body => {
         toast.info(body.message)
         if (body.name) {
           localStorage.setItem('name', body.name)
           localStorage.setItem('token', body.token)
           localStorage.setItem('userId', body.userId)
-        }
-        if (body.role === 'Admin') {
-          localStorage.setItem('isAdmin', true)
-          this.setState({
-            name: body.name,
-            isAdmin: true
-          })
-        }
-        else {
           this.setState({
             name: body.name
           })
         }
       })
+
   }
-  register = (data) => {
-    fetch('http://localhost:9999/auth/signup', {
-      method: 'POST',
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(data)
-    })
-      .then(res => res.json())
+  register = (method, data) => {
+    fetchData(method, data)
       .then(body => {
         toast.info(body.message)
         if (body.name) {
@@ -98,16 +77,8 @@ class App extends Component {
     localStorage.clear()
   }
 
-  createPost(data) {
-    fetch('http://localhost:9999/feed/post/create', {
-      method: 'POST',
-      headers: {
-        "Content-Type": "application/json",
-        'Authorization': `Bearer ${localStorage.token}`
-      },
-      body: JSON.stringify(data)
-    })
-      .then(res => res.json())
+  createPost(method,data) {
+    fetchData(method,data)
       .then(body => {
         toast.info(body.message)
         if (body.success) {

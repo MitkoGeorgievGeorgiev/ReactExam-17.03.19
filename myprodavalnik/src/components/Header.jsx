@@ -1,5 +1,6 @@
-import React from 'react'
-import { NavLink } from 'react-router-dom'
+import React, { Fragment } from 'react'
+import { NavLink ,Link} from 'react-router-dom'
+const logoutStyle="float:right"
 
 const Header = (props) => {
     return (
@@ -8,15 +9,16 @@ const Header = (props) => {
                 <NavLink to="/" activeClassName="active" aria-current="page">My Prodavalnik</NavLink>
                 <NavLink to="/posts/all" activeClassName="active">Всички обяви</NavLink>
                 {localStorage.name
-                    ? <NavLink to={`/posts/my/${localStorage.userId}`} activeClassName="active">Мойте обяви</NavLink>
-                    : null}
-                {!localStorage.name
-                    ? <NavLink to="/register">Регистрация</NavLink>
-                    : <NavLink to="/logout" onClick={props.logout}>Изход</NavLink>
-                }
-                {!localStorage.name
-                    ? <NavLink to="/login">Вход</NavLink>
-                    : <NavLink to={`/posts/my/${localStorage.userId}`}>Добре дошъл {localStorage.name}!</NavLink>}
+                    ?
+                    <Fragment>
+                        <NavLink to={`/posts/my/${localStorage.userId}`} activeClassName="active">Мойте обяви</NavLink>
+                        <Link to="#">Welcome {localStorage.name}</Link>
+                        <NavLink className="nav-menu-right" to="/logout" onClick={props.logout}>Изход</NavLink>
+                    </Fragment>
+                    : <Fragment>
+                        <NavLink to="/register">Регистрация</NavLink>
+                        <NavLink to="/login">Вход</NavLink>
+                    </Fragment>}
             </nav>
         </header>
     )

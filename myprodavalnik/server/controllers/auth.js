@@ -29,9 +29,18 @@ module.exports = {
         name,
         salt
       }).then((user) => {
+        const token = jwt.sign({ 
+          email: user.email,
+          userId: user._id.toString(),
+          name:user.name
+        }
+        , 'somesupersecret'
+        , { expiresIn: '1h' });
         
         res.status(201)
           .json({ message: 'Вие се регистрирахте успешно!',
+          token, 
+             userId: user._id.toString(),
            name: user.name,
           role:user.role });
       })

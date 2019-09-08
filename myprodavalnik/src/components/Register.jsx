@@ -19,7 +19,7 @@ class Register extends Component {
     }
     handleSubmit(event) {
         event.preventDefault()
-        this.props.register(this.state)
+        this.props.register('signUp',this.state)
     }
     render() {
         if (this.props.name) {

@@ -22,7 +22,7 @@ class CreatePost extends Component {
     }
     handleSubmit(event) {
         event.preventDefault()
-        this.props.createPost(this.state)
+        this.props.createPost('createPost',this.state)
     }
     render() {
         if (this.props.postCreated) {

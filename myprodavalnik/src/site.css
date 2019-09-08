@@ -200,3 +200,6 @@ h1,h2,p{
     margin-right: auto;
     
 }
+.nav-menu-right{
+    float:right
+}
