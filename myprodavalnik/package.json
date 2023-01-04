@@ -8,7 +8,7 @@
     "react-dom": "^16.8.4",
     "react-private-route": "1.1.2",
     "react-router-dom": "^4.4.0-beta.7",
-    "react-scripts": "2.1.8",
+    "react-scripts": "5.0.1",
     "react-search": "2.1.0",
     "react-toastify": "^4.5.2",
     "reactstrap": "7.1.0"
